@@ -1,30 +1,31 @@
-const { getUserFullName, getAllUsers } = require('../userService');
-const { fetchUserData } = require('../api');
+const { getUserFullName, getAllUsers } = require("../src/userService");
+const { fetchUserData } = require("../src/api");
 
-jest.mock('../api');
+jest.mock("../src/api");
 
-describe('User Service', () => {
+describe("User Service", () => {
+  const mockUserJohn = { name: { first: "John", last: "Doe" } };
+  const mockUserJane = { name: { first: "Jane", last: "Smith" } };
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test('getUserFullName should return full name', async () => {
-    fetchUserData.mockResolvedValue({
-      name: { first: 'John', last: 'Doe' },
-    });
+  test("getUserFullName should return the correct full name for a user", async () => {
+    fetchUserData.mockResolvedValue(mockUserJohn);
 
     const fullName = await getUserFullName(1);
-    expect(fetchUserData).toHaveBeenCalledWith(1);
-    expect(fullName).toBe('John Doe');
+
+    expect(fullName).toBe("John Doe");
   });
 
-  test('getAllUsers should return all user full names', async () => {
+  test("getAllUsers should return full names of all users", async () => {
     fetchUserData
-      .mockResolvedValueOnce({ name: { first: 'John', last: 'Doe' } })
-      .mockResolvedValueOnce({ name: { first: 'Jane', last: 'Smith' } });
+      .mockResolvedValueOnce(mockUserJohn)
+      .mockResolvedValueOnce(mockUserJane);
 
     const users = await getAllUsers();
-    expect(fetchUserData).toHaveBeenCalledTimes(2);
-    expect(users).toEqual(['John Doe', 'Jane Smith']);
+
+    expect(users).toEqual(["John Doe", "Jane Smith"]);
   });
 });

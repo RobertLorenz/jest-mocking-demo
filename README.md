@@ -2,8 +2,9 @@
 
 ### Setup
 
- 1. Run `npm install` in terminal
- 2. Use command `npm test` to run the tests
+ 1. Clone the repository: `git clone https://github.com/RobertLorenz/jest-mocking-demo.git`
+ 2. Run `npm install` in terminal
+ 3. Use command `npm test` to run the tests
  
 Your output should look like this:
  
